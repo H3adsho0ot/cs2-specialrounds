@@ -1,0 +1,12 @@
+C:\Users\nikla\source\repos\cs2-specialrounds\bin\Debug\net7.0\SpecialRounds.deps.json
+C:\Users\nikla\source\repos\cs2-specialrounds\bin\Debug\net7.0\SpecialRounds.dll
+C:\Users\nikla\source\repos\cs2-specialrounds\bin\Debug\net7.0\SpecialRounds.pdb
+C:\Users\nikla\source\repos\cs2-specialrounds\obj\Debug\net7.0\SpecialRounds.csproj.AssemblyReference.cache
+C:\Users\nikla\source\repos\cs2-specialrounds\obj\Debug\net7.0\SpecialRounds.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\nikla\source\repos\cs2-specialrounds\obj\Debug\net7.0\SpecialRounds.AssemblyInfoInputs.cache
+C:\Users\nikla\source\repos\cs2-specialrounds\obj\Debug\net7.0\SpecialRounds.AssemblyInfo.cs
+C:\Users\nikla\source\repos\cs2-specialrounds\obj\Debug\net7.0\SpecialRounds.csproj.CoreCompileInputs.cache
+C:\Users\nikla\source\repos\cs2-specialrounds\obj\Debug\net7.0\SpecialRounds.dll
+C:\Users\nikla\source\repos\cs2-specialrounds\obj\Debug\net7.0\refint\SpecialRounds.dll
+C:\Users\nikla\source\repos\cs2-specialrounds\obj\Debug\net7.0\SpecialRounds.pdb
+C:\Users\nikla\source\repos\cs2-specialrounds\obj\Debug\net7.0\ref\SpecialRounds.dll

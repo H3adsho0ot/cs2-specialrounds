@@ -107,7 +107,7 @@ public partial class SpecialRounds : BasePlugin, IPluginConfig<ConfigSpecials>
     [ConsoleCommand("css_startround", "Start specific round")]
     public void startround(CCSPlayerController? player, CommandInfo info)
     {
-        if(AdminManager.PlayerHasPermissions(player, "@css/root"))
+        if (AdminManager.PlayerHasPermissions(player, "@css/root"))
         {
 
             int round_id = Convert.ToInt32(info.ArgByIndex(1));
@@ -127,7 +127,7 @@ public partial class SpecialRounds : BasePlugin, IPluginConfig<ConfigSpecials>
         if (EndRound)
         {
             WriteColor($"SpecialRound - [*SUCCESS*] I turning off the special round.", ConsoleColor.Green);
-            if(IsRoundNumber == 1)
+            if (IsRoundNumber == 1)
             {
                 change_cvar("mp_buytime", $"{Config.mp_buytime}");
             }
@@ -186,101 +186,90 @@ public partial class SpecialRounds : BasePlugin, IPluginConfig<ConfigSpecials>
             return HookResult.Continue;
         }
         Random rnd = new Random();
-        int random = rnd.Next(0, 60);
-        if (random == 1 || random == 2)
+        int random = rnd.Next(1, 9);
+
+        IsRound = true;
+        EndRound = true;
+        IsRoundNumber = random;
+
+        bool foundNextGame = false;
+        while (foundNextGame == false)
         {
-            if (Config.AllowKnifeRound)
+            switch (random)
             {
-                IsRound = true;
-                EndRound = true;
-                IsRoundNumber = 1;
-                NameOfRound = "Knife only";
+                case 1:
+                    if (Config.AllowKnifeRound)
+                    {
+                        foundNextGame = true;
+                    }
+                    NameOfRound = "Knife only";
+                    break;
+                case 2:
+                    if (Config.AllowBHOPRound)
+                    {
+                        foundNextGame = true;
+                    }
+                    NameOfRound = "Auto BHopping";
+                    break;
+                case 3:
+                    if (Config.AllowGravityRound)
+                    {
+                        foundNextGame = true;
+                    }
+                    NameOfRound = "Gravity round";
+                    break;
+                case 4:
+                    if (Config.AllowAWPRound)
+                    {
+                        foundNextGame = true;
+                    }
+                    NameOfRound = "Only AWP";
+                    break;
+                case 5:
+                    if (Config.AllowP90Round)
+                    {
+                        foundNextGame = true;
+                    }
+                    NameOfRound = "Only P90";
+                    break;
+                case 6:
+                    if (Config.AllowANORound)
+                    {
+                        foundNextGame = true;
+                    }
+                    NameOfRound = "Only AWP + NOSCOPE";
+                    break;
+                case 7:
+                    if (Config.AllowSlapRound)
+                    {
+                        foundNextGame = true;
+                    }
+                    NameOfRound = "Slaping round";
+                    break;
+                case 8:
+                    if (Config.AllowDecoyRound)
+                    {
+                        foundNextGame = true;
+                    }
+                    NameOfRound = "Decoy round";
+                    break;
+                case 9:
+                    if (Config.AllowSpeedRound)
+                    {
+                        foundNextGame = true;
+                    }
+                    NameOfRound = "Speed round";
+                    break;
+            }
+
+            random = random + 1;
+            if(random > 9)
+            {
+                random = 1;
             }
         }
-        if (random == 6 || random == 7)
-        {
-            if (Config.AllowBHOPRound)
-            {
-                IsRound = true;
-                EndRound = true;
-                IsRoundNumber = 2;
-                NameOfRound = "Auto BHopping";
-            }
-        }
-        if (random == 14 || random == 15)
-        {
-            if (Config.AllowGravityRound)
-            {
-                IsRound = true;
-                EndRound = true;
-                IsRoundNumber = 3;
-                NameOfRound = "Gravity round";
-            }
-        }
-        if (random == 21 || random == 22)
-        {
-            if (Config.AllowAWPRound)
-            {
-                IsRound = true;
-                EndRound = true;
-                IsRoundNumber = 4;
-                NameOfRound = "Only AWP";
-            }
-        }
-        if (random == 29 || random == 30)
-        {
-            if (Config.AllowP90Round)
-            {
-                IsRound = true;
-                EndRound = true;
-                IsRoundNumber = 5;
-                NameOfRound = "Only P90";
-            }
-        }
-        if (random == 36 || random == 37)
-        {
-            if (Config.AllowANORound)
-            {
-                IsRound = true;
-                EndRound = true;
-                IsRoundNumber = 6;
-                NameOfRound = "Only AWP + NOSCOPE";
-            }
-        }
-        if (random == 42 || random == 43)
-        {
-            if (Config.AllowANORound)
-            {
-                IsRound = true;
-                EndRound = true;
-                IsRoundNumber = 7;
-                NameOfRound = "Slaping round";
-            }
-        }
-        if (random == 49 || random == 50)
-        {
-            if (Config.AllowDecoyRound)
-            {
-                IsRound = true;
-                EndRound = true;
-                IsRoundNumber = 8;
-                NameOfRound = "Decoy round";
-            }
-        }
-        if (random == 58 || random == 59)
-        {
-            if (Config.AllowSpeedRound)
-            {
-                IsRound = true;
-                EndRound = true;
-                IsRoundNumber = 9;
-                NameOfRound = "Speed round";
-            }
-        }
-        if (IsRound == true)
-        {
-            WriteColor($"SpecialRound - [*ROUND START*] Starting special round {NameOfRound} Number is:{random}.", ConsoleColor.Green);
-        }
+
+        WriteColor($"SpecialRound - [*ROUND START*] Starting special round {NameOfRound} Number is:{random}.", ConsoleColor.Green);
         //Server.PrintToConsole($" Settings : {NameOfRound} / IsRound {IsRound} / IsRoundNumber {IsRoundNumber} / Random number {random}");
 
         return HookResult.Continue;
@@ -341,7 +330,7 @@ public partial class SpecialRounds : BasePlugin, IPluginConfig<ConfigSpecials>
                     }
                 }
             }
-            if (IsRoundNumber == 3 )
+            if (IsRoundNumber == 3)
             {
                 WriteColor($"SpecialRound - [*ROUND START*] Starting special round {NameOfRound}.", ConsoleColor.Green);
 
@@ -431,10 +420,10 @@ public partial class SpecialRounds : BasePlugin, IPluginConfig<ConfigSpecials>
             {
                 if (IsRound || Config.AllowSlapRound)
                 {
-                        Random rnd = new Random();
-                        int random = rnd.Next(3, 10);
-                        float random_time = random;
-                        timer_up = AddTimer(random + 0.1f, () => { goup(player); }, TimerFlags.REPEAT);
+                    Random rnd = new Random();
+                    int random = rnd.Next(3, 10);
+                    float random_time = random;
+                    timer_up = AddTimer(random + 0.1f, () => { goup(player); }, TimerFlags.REPEAT);
                 }
             }
             if (IsRoundNumber == 8)
