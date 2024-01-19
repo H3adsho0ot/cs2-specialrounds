@@ -42,7 +42,6 @@ public partial class SpecialRounds : BasePlugin, IPluginConfig<ConfigSpecials>
             NameOfRound = "";
             IsRoundNumber = 0;
             Round = 0;
-
         });
 
         RegisterListener<Listeners.OnTick>(() =>
@@ -254,20 +253,6 @@ public partial class SpecialRounds : BasePlugin, IPluginConfig<ConfigSpecials>
             {
                 case 1:
                     change_cvar("mp_buytime", "0");
-
-                    if (is_alive(player))
-                    {
-                        foreach (var weapon in player.PlayerPawn.Value.WeaponServices!.MyWeapons)
-                        {
-                            if (weapon is { IsValid: true, Value.IsValid: true })
-                            {
-                                if (!weapon.Value.DesignerName.Contains("bayonet") || !weapon.Value.DesignerName.Contains("knife"))
-                                {
-                                    weapon.Value.Remove();
-                                }
-                            }
-                        }
-                    }
                     break;
                 case 2:
                     change_cvar("sv_autobunnyhopping", "true");
@@ -278,51 +263,12 @@ public partial class SpecialRounds : BasePlugin, IPluginConfig<ConfigSpecials>
                     break;
                 case 4:
                     change_cvar("mp_buytime", "0");
-
-                    if (is_alive(player))
-                    {
-                        foreach (var weapon in player.PlayerPawn.Value.WeaponServices!.MyWeapons)
-                        {
-                            if (weapon is { IsValid: true, Value.IsValid: true })
-                            {
-                                weapon.Value.Remove();
-                            }
-                        }
-                        player.GiveNamedItem("weapon_awp");
-                    }
                     break;
                 case 5:
                     change_cvar("mp_buytime", "0");
-
-                    if (is_alive(player))
-                    {
-                        foreach (var weapon in player.PlayerPawn.Value.WeaponServices!.MyWeapons)
-                        {
-                            if (weapon is { IsValid: true, Value.IsValid: true })
-                            {
-                                weapon.Value.Remove();
-                            }
-                        }
-                        player.GiveNamedItem("weapon_p90");
-                    }
                     break;
                 case 6:
                     change_cvar("mp_buytime", "0");
-
-                    if (is_alive(player))
-                    {
-                        foreach (var weapon in player.PlayerPawn.Value.WeaponServices!.MyWeapons)
-                        {
-                            if (weapon is { IsValid: true, Value.IsValid: true })
-                            {
-                                if (!weapon.Value.DesignerName.Contains("bayonet") || !weapon.Value.DesignerName.Contains("knife"))
-                                {
-                                    weapon.Value.Remove();
-                                }
-                            }
-                        }
-                        player.GiveNamedItem("weapon_awp");
-                    }
                     break;
                 case 7:
                     Random rnd = new Random();
@@ -335,19 +281,6 @@ public partial class SpecialRounds : BasePlugin, IPluginConfig<ConfigSpecials>
 
                     if (is_alive(player))
                     {
-                        foreach (var weapon in player.PlayerPawn.Value!.WeaponServices!.MyWeapons)
-                        {
-                            if (weapon is { IsValid: true, Value.IsValid: true })
-                            {
-                                if (!weapon.Value.DesignerName.Contains("bayonet") || !weapon.Value.DesignerName.Contains("knife"))
-                                {
-                                    weapon.Value.Remove();
-                                }
-                            }
-                        }
-                        player.PlayerPawn.Value!.Health = 1;
-                        player.GiveNamedItem("weapon_decoy");
-
                         timer_decoy = AddTimer(2.0f, () => { DecoyCheck(player); }, TimerFlags.REPEAT);
                     }
                     break;
@@ -403,6 +336,98 @@ public partial class SpecialRounds : BasePlugin, IPluginConfig<ConfigSpecials>
 
         weaponservices.ActiveWeapon.Value.Remove();
         player.GiveNamedItem(currentWeapon);
+
+        return HookResult.Continue;
+    }
+
+
+
+    [GameEventHandler]
+    public HookResult OnRoundFreezeEnd(EventRoundFreezeEnd @event, GameEventInfo info)
+    {
+        foreach (var l_player in Utilities.GetPlayers())
+        {
+            CCSPlayerController player = l_player;
+            var client = player.Index;
+
+            switch (IsRoundNumber)
+            {
+                case 1:
+                    if (is_alive(player))
+                    {
+                        foreach (var weapon in player.PlayerPawn.Value.WeaponServices!.MyWeapons)
+                        {
+                            if (weapon is { IsValid: true, Value.IsValid: true })
+                            {
+                                if (!weapon.Value.DesignerName.Contains("bayonet") || !weapon.Value.DesignerName.Contains("knife"))
+                                {
+                                    weapon.Value.Remove();
+                                }
+                            }
+                        }
+                    }
+                    break;
+                case 4:
+                    if (is_alive(player))
+                    {
+                        foreach (var weapon in player.PlayerPawn.Value.WeaponServices!.MyWeapons)
+                        {
+                            if (weapon is { IsValid: true, Value.IsValid: true })
+                            {
+                                weapon.Value.Remove();
+                            }
+                        }
+                        player.GiveNamedItem("weapon_awp");
+                    }
+                    break;
+                case 5:
+                    if (is_alive(player))
+                    {
+                        foreach (var weapon in player.PlayerPawn.Value.WeaponServices!.MyWeapons)
+                        {
+                            if (weapon is { IsValid: true, Value.IsValid: true })
+                            {
+                                weapon.Value.Remove();
+                            }
+                        }
+                        player.GiveNamedItem("weapon_p90");
+                    }
+                    break;
+                case 6:
+                    if (is_alive(player))
+                    {
+                        foreach (var weapon in player.PlayerPawn.Value.WeaponServices!.MyWeapons)
+                        {
+                            if (weapon is { IsValid: true, Value.IsValid: true })
+                            {
+                                if (!weapon.Value.DesignerName.Contains("bayonet") || !weapon.Value.DesignerName.Contains("knife"))
+                                {
+                                    weapon.Value.Remove();
+                                }
+                            }
+                        }
+                        player.GiveNamedItem("weapon_awp");
+                    }
+                    break;
+                case 8:
+                    if (is_alive(player))
+                    {
+                        foreach (var weapon in player.PlayerPawn.Value!.WeaponServices!.MyWeapons)
+                        {
+                            if (weapon is { IsValid: true, Value.IsValid: true })
+                            {
+                                if (!weapon.Value.DesignerName.Contains("bayonet") || !weapon.Value.DesignerName.Contains("knife"))
+                                {
+                                    weapon.Value.Remove();
+                                }
+                            }
+                        }
+                        player.PlayerPawn.Value!.Health = 1;
+                        player.GiveNamedItem("weapon_decoy");
+                    }
+                    break;
+            }
+        }
 
         return HookResult.Continue;
     }
