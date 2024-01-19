@@ -42,7 +42,7 @@
           "dependencies": {
             "CounterStrikeSharp.API": {
               "target": "Package",
-              "version": "[1.0.86, )"
+              "version": "[1.0.147, )"
             }
           },
           "imports": [

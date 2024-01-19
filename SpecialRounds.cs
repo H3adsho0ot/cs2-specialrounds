@@ -36,11 +36,11 @@ public partial class SpecialRounds : BasePlugin, IPluginConfig<ConfigSpecials>
 
     public ConfigSpecials Config { get; set; }
     public int Round;
-    public bool EndRound;
-    public bool IsRound;
     public int IsRoundNumber;
     public string NameOfRound = "";
     public bool isset = false;
+
+    public bool wasSpecialRound = false;
 
     public void OnConfigParsed(ConfigSpecials config)
     {
@@ -52,8 +52,6 @@ public partial class SpecialRounds : BasePlugin, IPluginConfig<ConfigSpecials>
         WriteColor("Special round is [*Loaded*]", ConsoleColor.Green);
         RegisterListener<Listeners.OnMapStart>(name =>
         {
-            EndRound = false;
-            IsRound = false;
             NameOfRound = "";
             IsRoundNumber = 0;
             Round = 0;
@@ -70,7 +68,7 @@ public partial class SpecialRounds : BasePlugin, IPluginConfig<ConfigSpecials>
                 var client = new CCSPlayerController(ent);
                 if (client == null || !client.IsValid)
                     continue;
-                if (IsRound)
+                if (wasSpecialRound)
                 {
                     client.PrintToCenterHtml(
                     $"<font color='gray'>----</font> <font class='fontSize-l' color='green'>Special Rounds</font><font color='gray'>----</font><br>" +
@@ -115,8 +113,6 @@ public partial class SpecialRounds : BasePlugin, IPluginConfig<ConfigSpecials>
             {
                 return;
             }
-            EndRound = false;
-            IsRound = true;
             IsRoundNumber = round_id;
             player.PrintToChat("YOU START A ROUND!");
         }
@@ -124,163 +120,128 @@ public partial class SpecialRounds : BasePlugin, IPluginConfig<ConfigSpecials>
     [GameEventHandler]
     public HookResult OnRoundEnd(EventRoundEnd @event, GameEventInfo info)
     {
-        if (EndRound)
+        WriteColor($"SpecialRound - [*SUCCESS*] I turning off the special round.", ConsoleColor.Green);
+
+        change_cvar("mp_buytime", $"{Config.mp_buytime}");
+        change_cvar("sv_autobunnyhopping", "false");
+        change_cvar("sv_enablebunnyhopping", "false");
+        change_cvar("sv_gravity", "800");
+        change_cvar("mp_buytime", $"{Config.mp_buytime}");
+        change_cvar("mp_buytime", $"{Config.mp_buytime}");
+        change_cvar("mp_buytime", $"{Config.mp_buytime}");
+        timer_up?.Kill();
+        change_cvar("mp_buytime", $"{Config.mp_buytime}");
+        timer_decoy?.Kill();
+
+        foreach (var player_l in Utilities.GetPlayers().Where(player => player is { IsValid: true }))
         {
-            WriteColor($"SpecialRound - [*SUCCESS*] I turning off the special round.", ConsoleColor.Green);
-            if (IsRoundNumber == 1)
+            player_l.PlayerPawn.Value!.VelocityModifier = 0.0f;
+        }
+
+        isset = false;
+        IsRoundNumber = 0;
+        NameOfRound = "";
+
+        if (!wasSpecialRound)
+        {
+            Random rnd = new Random();
+            int random = rnd.Next(1, 9);
+
+            IsRoundNumber = random;
+
+            bool foundNextGame = false;
+            while (foundNextGame == false)
             {
-                change_cvar("mp_buytime", $"{Config.mp_buytime}");
-            }
-            if (IsRoundNumber == 2)
-            {
-                change_cvar("sv_autobunnyhopping", "false");
-                change_cvar("sv_enablebunnyhopping", "false");
-            }
-            if (IsRoundNumber == 3)
-            {
-                change_cvar("sv_gravity", "800");
-            }
-            if (IsRoundNumber == 4)
-            {
-                change_cvar("mp_buytime", $"{Config.mp_buytime}");
-            }
-            if (IsRoundNumber == 5)
-            {
-                change_cvar("mp_buytime", $"{Config.mp_buytime}");
-            }
-            if (IsRoundNumber == 6)
-            {
-                change_cvar("mp_buytime", $"{Config.mp_buytime}");
-            }
-            if (IsRoundNumber == 7)
-            {
-                timer_up?.Kill();
-            }
-            if (IsRoundNumber == 8)
-            {
-                change_cvar("mp_buytime", $"{Config.mp_buytime}");
-                timer_decoy?.Kill();
-            }
-            if (IsRoundNumber == 9)
-            {
-                foreach (var player_l in Utilities.GetPlayers().Where(player => player is { IsValid: true }))
+                switch (random)
                 {
-                    player_l.PlayerPawn.Value!.VelocityModifier = 0.0f;
+                    case 1:
+                        if (Config.AllowKnifeRound)
+                        {
+                            foundNextGame = true;
+                        }
+                        NameOfRound = "Knife only";
+                        break;
+                    case 2:
+                        if (Config.AllowBHOPRound)
+                        {
+                            foundNextGame = true;
+                        }
+                        NameOfRound = "Auto BHopping";
+                        break;
+                    case 3:
+                        if (Config.AllowGravityRound)
+                        {
+                            foundNextGame = true;
+                        }
+                        NameOfRound = "Gravity round";
+                        break;
+                    case 4:
+                        if (Config.AllowAWPRound)
+                        {
+                            foundNextGame = true;
+                        }
+                        NameOfRound = "Only AWP";
+                        break;
+                    case 5:
+                        if (Config.AllowP90Round)
+                        {
+                            foundNextGame = true;
+                        }
+                        NameOfRound = "Only P90";
+                        break;
+                    case 6:
+                        if (Config.AllowANORound)
+                        {
+                            foundNextGame = true;
+                        }
+                        NameOfRound = "Only AWP + NOSCOPE";
+                        break;
+                    case 7:
+                        if (Config.AllowSlapRound)
+                        {
+                            foundNextGame = true;
+                        }
+                        NameOfRound = "Slaping round";
+                        break;
+                    case 8:
+                        if (Config.AllowDecoyRound)
+                        {
+                            foundNextGame = true;
+                        }
+                        NameOfRound = "Decoy round";
+                        break;
+                    case 9:
+                        if (Config.AllowSpeedRound)
+                        {
+                            foundNextGame = true;
+                        }
+                        NameOfRound = "Speed round";
+                        break;
+                }
+
+                random = random + 1;
+                if (random > 9)
+                {
+                    random = 1;
                 }
             }
-            IsRound = false;
-            EndRound = false;
-            isset = false;
-            IsRoundNumber = 0;
-            NameOfRound = "";
 
+            wasSpecialRound = true;
+            WriteColor($"SpecialRound - [*ROUND START*] Starting special round {NameOfRound} Number is:{random}.", ConsoleColor.Green);
         }
-        if (IsRound)
+        else
         {
-            WriteColor($"SpecialRound - [*WARNING*] I cannot start new special round, its now.", ConsoleColor.Yellow);
-            return HookResult.Continue;
+            wasSpecialRound = false;
         }
-        if (Round < 0)
-        {
-            WriteColor("SpecialRound - [*WARNING*] I cannot start new special round, its round < 5.", ConsoleColor.Yellow);
-            return HookResult.Continue;
-        }
-        Random rnd = new Random();
-        int random = rnd.Next(1, 9);
-
-        IsRound = true;
-        EndRound = true;
-        IsRoundNumber = random;
-
-        bool foundNextGame = false;
-        while (foundNextGame == false)
-        {
-            switch (random)
-            {
-                case 1:
-                    if (Config.AllowKnifeRound)
-                    {
-                        foundNextGame = true;
-                    }
-                    NameOfRound = "Knife only";
-                    break;
-                case 2:
-                    if (Config.AllowBHOPRound)
-                    {
-                        foundNextGame = true;
-                    }
-                    NameOfRound = "Auto BHopping";
-                    break;
-                case 3:
-                    if (Config.AllowGravityRound)
-                    {
-                        foundNextGame = true;
-                    }
-                    NameOfRound = "Gravity round";
-                    break;
-                case 4:
-                    if (Config.AllowAWPRound)
-                    {
-                        foundNextGame = true;
-                    }
-                    NameOfRound = "Only AWP";
-                    break;
-                case 5:
-                    if (Config.AllowP90Round)
-                    {
-                        foundNextGame = true;
-                    }
-                    NameOfRound = "Only P90";
-                    break;
-                case 6:
-                    if (Config.AllowANORound)
-                    {
-                        foundNextGame = true;
-                    }
-                    NameOfRound = "Only AWP + NOSCOPE";
-                    break;
-                case 7:
-                    if (Config.AllowSlapRound)
-                    {
-                        foundNextGame = true;
-                    }
-                    NameOfRound = "Slaping round";
-                    break;
-                case 8:
-                    if (Config.AllowDecoyRound)
-                    {
-                        foundNextGame = true;
-                    }
-                    NameOfRound = "Decoy round";
-                    break;
-                case 9:
-                    if (Config.AllowSpeedRound)
-                    {
-                        foundNextGame = true;
-                    }
-                    NameOfRound = "Speed round";
-                    break;
-            }
-
-            random = random + 1;
-            if(random > 9)
-            {
-                random = 1;
-            }
-        }
-
-        WriteColor($"SpecialRound - [*ROUND START*] Starting special round {NameOfRound} Number is:{random}.", ConsoleColor.Green);
-        //Server.PrintToConsole($" Settings : {NameOfRound} / IsRound {IsRound} / IsRoundNumber {IsRoundNumber} / Random number {random}");
 
         return HookResult.Continue;
     }
+
     [GameEventHandler]
     public HookResult OnRoundStart(EventRoundStart @event, GameEventInfo info)
     {
         if (GameRules().WarmupPeriod)
         {
-            IsRound = false;
-            EndRound = false;
             isset = false;
             IsRoundNumber = 0;
             NameOfRound = "";
@@ -289,12 +250,11 @@ public partial class SpecialRounds : BasePlugin, IPluginConfig<ConfigSpecials>
         {
             CCSPlayerController player = l_player;
             var client = player.Index;
-            if (IsRoundNumber == 1)
+            switch (IsRoundNumber)
             {
-                WriteColor($"SpecialRound - [*ROUND START*] Starting special round {NameOfRound}.", ConsoleColor.Green);
+                case 1:
+                    WriteColor($"SpecialRound - [*ROUND START*] Starting special round {NameOfRound}.", ConsoleColor.Green);
 
-                if (IsRound || Config.AllowKnifeRound)
-                {
                     if (!is_alive(player))
                         return HookResult.Continue;
                     foreach (var weapon in player.PlayerPawn.Value.WeaponServices!.MyWeapons)
@@ -310,45 +270,21 @@ public partial class SpecialRounds : BasePlugin, IPluginConfig<ConfigSpecials>
                             weapon.Value.Remove();
                         }
                     }
-                    if (!EndRound)
-                    {
-                        EndRound = true;
-                    }
-                }
-            }
-            if (IsRoundNumber == 2)
-            {
-                WriteColor($"SpecialRound - [*ROUND START*] Starting special round {NameOfRound}.", ConsoleColor.Green);
+                    break;
+                case 2:
+                    WriteColor($"SpecialRound - [*ROUND START*] Starting special round {NameOfRound}.", ConsoleColor.Green);
 
-                if (IsRound || Config.AllowBHOPRound)
-                {
                     change_cvar("sv_autobunnyhopping", "true");
                     change_cvar("sv_enablebunnyhopping", "true");
-                    if (!EndRound)
-                    {
-                        EndRound = true;
-                    }
-                }
-            }
-            if (IsRoundNumber == 3)
-            {
-                WriteColor($"SpecialRound - [*ROUND START*] Starting special round {NameOfRound}.", ConsoleColor.Green);
+                    break;
+                case 3:
+                    WriteColor($"SpecialRound - [*ROUND START*] Starting special round {NameOfRound}.", ConsoleColor.Green);
 
-                if (IsRound || Config.AllowGravityRound)
-                {
                     change_cvar("sv_gravity", "400");
-                    if (!EndRound)
-                    {
-                        EndRound = true;
-                    }
-                }
-            }
-            if (IsRoundNumber == 4)
-            {
-                WriteColor($"SpecialRound - [*ROUND START*] Starting special round {NameOfRound}.", ConsoleColor.Green);
+                    break;
+                case 4:
+                    WriteColor($"SpecialRound - [*ROUND START*] Starting special round {NameOfRound}.", ConsoleColor.Green);
 
-                if (IsRound || Config.AllowAWPRound)
-                {
                     if (!is_alive(player))
                         return HookResult.Continue;
                     foreach (var weapon in player.PlayerPawn.Value.WeaponServices!.MyWeapons)
@@ -360,18 +296,10 @@ public partial class SpecialRounds : BasePlugin, IPluginConfig<ConfigSpecials>
                         }
                     }
                     player.GiveNamedItem("weapon_awp");
-                    if (!EndRound)
-                    {
-                        EndRound = true;
-                    }
-                }
-            }
-            if (IsRoundNumber == 5)
-            {
-                WriteColor($"SpecialRound - [*ROUND START*] Starting special round {NameOfRound}.", ConsoleColor.Green);
+                    break;
+                case 5:
+                    WriteColor($"SpecialRound - [*ROUND START*] Starting special round {NameOfRound}.", ConsoleColor.Green);
 
-                if (IsRound || Config.AllowP90Round)
-                {
                     if (!is_alive(player))
                         return HookResult.Continue;
                     foreach (var weapon in player.PlayerPawn.Value.WeaponServices!.MyWeapons)
@@ -383,18 +311,10 @@ public partial class SpecialRounds : BasePlugin, IPluginConfig<ConfigSpecials>
                         }
                     }
                     player.GiveNamedItem("weapon_p90");
-                    if (!EndRound)
-                    {
-                        EndRound = true;
-                    }
-                }
-            }
-            if (IsRoundNumber == 6)
-            {
-                WriteColor($"SpecialRound - [*ROUND START*] Starting special round {NameOfRound}.", ConsoleColor.Green);
+                    break;
+                case 6:
+                    WriteColor($"SpecialRound - [*ROUND START*] Starting special round {NameOfRound}.", ConsoleColor.Green);
 
-                if (IsRound || Config.AllowANORound)
-                {
                     if (!is_alive(player))
                         return HookResult.Continue;
                     foreach (var weapon in player.PlayerPawn.Value.WeaponServices!.MyWeapons)
@@ -410,26 +330,14 @@ public partial class SpecialRounds : BasePlugin, IPluginConfig<ConfigSpecials>
                     }
                     change_cvar("mp_buytime", "0");
                     player.GiveNamedItem("weapon_awp");
-                    if (!EndRound)
-                    {
-                        EndRound = true;
-                    }
-                }
-            }
-            if (IsRoundNumber == 7)
-            {
-                if (IsRound || Config.AllowSlapRound)
-                {
+                    break;
+                case 7:
                     Random rnd = new Random();
                     int random = rnd.Next(3, 10);
                     float random_time = random;
                     timer_up = AddTimer(random + 0.1f, () => { goup(player); }, TimerFlags.REPEAT);
-                }
-            }
-            if (IsRoundNumber == 8)
-            {
-                if (IsRound || Config.AllowDecoyRound)
-                {
+                    break;
+                case 8:
                     foreach (var weapon in player.PlayerPawn.Value!.WeaponServices!.MyWeapons)
                     {
                         if (weapon is { IsValid: true, Value.IsValid: true })
@@ -444,25 +352,21 @@ public partial class SpecialRounds : BasePlugin, IPluginConfig<ConfigSpecials>
                     Server.ExecuteCommand("mp_buytime 0");
                     timer_decoy = AddTimer(2.0f, () => { DecoyCheck(player); }, TimerFlags.REPEAT);
                     Server.PrintToConsole($"{player.PlayerName}");
-                }
-            }
-            if (IsRoundNumber == 9)
-            {
-                if (IsRound || Config.AllowSpeedRound)
-                {
+                    break;
+                case 9:
                     CCSPlayerPawn? pawn = player.PlayerPawn.Value;
                     Server.PrintToConsole($"{player.PlayerPawn.Value!.Speed}");
                     pawn.VelocityModifier = 2.0f;
                     player.PlayerPawn.Value!.Health = 200;
-                }
-            }
+                    break;
 
+            }
         }
         isset = false;
         return HookResult.Continue;
     }
-    [GameEventHandler(HookMode.Post)]
 
+    [GameEventHandler(HookMode.Post)]
     public HookResult OnPlayerHurt(EventPlayerHurt @event, GameEventInfo info)
     {
         CCSPlayerController player = @event.Userid;
@@ -499,3 +403,4 @@ public partial class SpecialRounds : BasePlugin, IPluginConfig<ConfigSpecials>
         return HookResult.Continue;
     }
 }
+

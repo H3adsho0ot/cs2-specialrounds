@@ -2,13 +2,15 @@
   "version": 3,
   "targets": {
     "net7.0": {
-      "CounterStrikeSharp.API/1.0.86": {
+      "CounterStrikeSharp.API/1.0.147": {
         "type": "package",
         "dependencies": {
           "McMaster.NETCore.Plugins": "1.4.0",
           "Microsoft.CSharp": "4.7.0",
+          "Microsoft.DotNet.ApiCompat.Task": "7.0.404",
           "Microsoft.Extensions.Hosting": "7.0.0",
           "Microsoft.Extensions.Hosting.Abstractions": "7.0.0",
+          "Microsoft.Extensions.Localization.Abstractions": "7.0.3",
           "Microsoft.Extensions.Logging": "7.0.0",
           "Scrutor": "4.2.2",
           "Serilog.Extensions.Logging": "7.0.0",
@@ -51,6 +53,15 @@
         },
         "runtime": {
           "lib/netcoreapp2.0/_._": {}
+        }
+      },
+      "Microsoft.DotNet.ApiCompat.Task/7.0.404": {
+        "type": "package",
+        "build": {
+          "build/_._": {}
+        },
+        "buildMultiTargeting": {
+          "buildMultiTargeting/_._": {}
         }
       },
       "Microsoft.DotNet.PlatformAbstractions/3.1.6": {
@@ -402,6 +413,19 @@
         },
         "build": {
           "buildTransitive/net6.0/_._": {}
+        }
+      },
+      "Microsoft.Extensions.Localization.Abstractions/7.0.3": {
+        "type": "package",
+        "compile": {
+          "lib/net7.0/Microsoft.Extensions.Localization.Abstractions.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/Microsoft.Extensions.Localization.Abstractions.dll": {
+            "related": ".xml"
+          }
         }
       },
       "Microsoft.Extensions.Logging/7.0.0": {
@@ -811,14 +835,14 @@
     }
   },
   "libraries": {
-    "CounterStrikeSharp.API/1.0.86": {
-      "sha512": "GmASP/POg15LT5Y7GEWldLMUK5RPtg7IwgFLUEY0sIjIXK7JSxy+PgMLRK5eNeXO+HozRBn9N7BB6TlEQ9Hrtg==",
+    "CounterStrikeSharp.API/1.0.147": {
+      "sha512": "16v1yZR5+r7S5fQ1Lv7AIW8O59PskpXM9/GixjGHPcWO4y1rouDsrAZf7Q+DGSuKmUuLLMg/rCHhsnqEshaKrg==",
       "type": "package",
-      "path": "counterstrikesharp.api/1.0.86",
+      "path": "counterstrikesharp.api/1.0.147",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "counterstrikesharp.api.1.0.86.nupkg.sha512",
+        "counterstrikesharp.api.1.0.147.nupkg.sha512",
         "counterstrikesharp.api.nuspec",
         "lib/net7.0/CounterStrikeSharp.API.dll",
         "lib/net7.0/CounterStrikeSharp.API.runtimeconfig.json",
@@ -907,6 +931,139 @@
         "ref/xamarinwatchos10/_._",
         "useSharedDesignerContext.txt",
         "version.txt"
+      ]
+    },
+    "Microsoft.DotNet.ApiCompat.Task/7.0.404": {
+      "sha512": "ahSvImDcyjf6QwE9zg/HU3A+7LeoCnPWmJdk7pK557BrEtRXQ58oLuK2ANZeQT3GSydIYeRlolHtJ5gSKSw/lg==",
+      "type": "package",
+      "path": "microsoft.dotnet.apicompat.task/7.0.404",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "LICENSE.txt",
+        "build/Microsoft.DotNet.ApiCompat.Task.targets",
+        "build/Microsoft.DotNet.ApiCompat.ValidateAssemblies.Common.targets",
+        "build/Microsoft.DotNet.ApiCompat.ValidateAssemblies.CrossTargeting.targets",
+        "build/Microsoft.DotNet.ApiCompat.ValidateAssemblies.NonCrossTargeting.targets",
+        "build/Microsoft.NET.ApiCompat.Common.targets",
+        "build/Microsoft.NET.ApiCompat.ValidatePackage.targets",
+        "buildMultiTargeting/Microsoft.DotNet.ApiCompat.Task.targets",
+        "microsoft.dotnet.apicompat.task.7.0.404.nupkg.sha512",
+        "microsoft.dotnet.apicompat.task.nuspec",
+        "tools/net472/Microsoft.DotNet.ApiCompat.Task.dll",
+        "tools/net472/Microsoft.DotNet.ApiCompat.Task.dll.config",
+        "tools/net472/Microsoft.DotNet.ApiCompat.Task.pdb",
+        "tools/net472/Microsoft.DotNet.ApiCompatibility.dll",
+        "tools/net472/Microsoft.DotNet.ApiCompatibility.dll.config",
+        "tools/net472/Microsoft.DotNet.ApiCompatibility.pdb",
+        "tools/net472/Microsoft.DotNet.PackageValidation.dll",
+        "tools/net472/Microsoft.DotNet.PackageValidation.dll.config",
+        "tools/net472/Microsoft.DotNet.PackageValidation.pdb",
+        "tools/net472/Newtonsoft.Json.dll",
+        "tools/net472/NuGet.Common.dll",
+        "tools/net472/NuGet.Configuration.dll",
+        "tools/net472/NuGet.Frameworks.dll",
+        "tools/net472/NuGet.Packaging.dll",
+        "tools/net472/NuGet.Protocol.dll",
+        "tools/net472/NuGet.Versioning.dll",
+        "tools/net472/cs/Microsoft.DotNet.ApiCompat.Task.resources.dll",
+        "tools/net472/cs/Microsoft.DotNet.ApiCompatibility.resources.dll",
+        "tools/net472/cs/Microsoft.DotNet.PackageValidation.resources.dll",
+        "tools/net472/de/Microsoft.DotNet.ApiCompat.Task.resources.dll",
+        "tools/net472/de/Microsoft.DotNet.ApiCompatibility.resources.dll",
+        "tools/net472/de/Microsoft.DotNet.PackageValidation.resources.dll",
+        "tools/net472/es/Microsoft.DotNet.ApiCompat.Task.resources.dll",
+        "tools/net472/es/Microsoft.DotNet.ApiCompatibility.resources.dll",
+        "tools/net472/es/Microsoft.DotNet.PackageValidation.resources.dll",
+        "tools/net472/fr/Microsoft.DotNet.ApiCompat.Task.resources.dll",
+        "tools/net472/fr/Microsoft.DotNet.ApiCompatibility.resources.dll",
+        "tools/net472/fr/Microsoft.DotNet.PackageValidation.resources.dll",
+        "tools/net472/it/Microsoft.DotNet.ApiCompat.Task.resources.dll",
+        "tools/net472/it/Microsoft.DotNet.ApiCompatibility.resources.dll",
+        "tools/net472/it/Microsoft.DotNet.PackageValidation.resources.dll",
+        "tools/net472/ja/Microsoft.DotNet.ApiCompat.Task.resources.dll",
+        "tools/net472/ja/Microsoft.DotNet.ApiCompatibility.resources.dll",
+        "tools/net472/ja/Microsoft.DotNet.PackageValidation.resources.dll",
+        "tools/net472/ko/Microsoft.DotNet.ApiCompat.Task.resources.dll",
+        "tools/net472/ko/Microsoft.DotNet.ApiCompatibility.resources.dll",
+        "tools/net472/ko/Microsoft.DotNet.PackageValidation.resources.dll",
+        "tools/net472/pl/Microsoft.DotNet.ApiCompat.Task.resources.dll",
+        "tools/net472/pl/Microsoft.DotNet.ApiCompatibility.resources.dll",
+        "tools/net472/pl/Microsoft.DotNet.PackageValidation.resources.dll",
+        "tools/net472/pt-BR/Microsoft.DotNet.ApiCompat.Task.resources.dll",
+        "tools/net472/pt-BR/Microsoft.DotNet.ApiCompatibility.resources.dll",
+        "tools/net472/pt-BR/Microsoft.DotNet.PackageValidation.resources.dll",
+        "tools/net472/ru/Microsoft.DotNet.ApiCompat.Task.resources.dll",
+        "tools/net472/ru/Microsoft.DotNet.ApiCompatibility.resources.dll",
+        "tools/net472/ru/Microsoft.DotNet.PackageValidation.resources.dll",
+        "tools/net472/tr/Microsoft.DotNet.ApiCompat.Task.resources.dll",
+        "tools/net472/tr/Microsoft.DotNet.ApiCompatibility.resources.dll",
+        "tools/net472/tr/Microsoft.DotNet.PackageValidation.resources.dll",
+        "tools/net472/zh-Hans/Microsoft.DotNet.ApiCompat.Task.resources.dll",
+        "tools/net472/zh-Hans/Microsoft.DotNet.ApiCompatibility.resources.dll",
+        "tools/net472/zh-Hans/Microsoft.DotNet.PackageValidation.resources.dll",
+        "tools/net472/zh-Hant/Microsoft.DotNet.ApiCompat.Task.resources.dll",
+        "tools/net472/zh-Hant/Microsoft.DotNet.ApiCompatibility.resources.dll",
+        "tools/net472/zh-Hant/Microsoft.DotNet.PackageValidation.resources.dll",
+        "tools/net6.0/Microsoft.DotNet.ApiCompat.Task.deps.json",
+        "tools/net6.0/Microsoft.DotNet.ApiCompat.Task.dll",
+        "tools/net6.0/Microsoft.DotNet.ApiCompat.Task.pdb",
+        "tools/net6.0/Microsoft.DotNet.ApiCompatibility.dll",
+        "tools/net6.0/Microsoft.DotNet.ApiCompatibility.pdb",
+        "tools/net6.0/Microsoft.DotNet.PackageValidation.dll",
+        "tools/net6.0/Microsoft.DotNet.PackageValidation.pdb",
+        "tools/net6.0/Newtonsoft.Json.dll",
+        "tools/net6.0/NuGet.Common.dll",
+        "tools/net6.0/NuGet.Configuration.dll",
+        "tools/net6.0/NuGet.Frameworks.dll",
+        "tools/net6.0/NuGet.Packaging.dll",
+        "tools/net6.0/NuGet.Protocol.dll",
+        "tools/net6.0/NuGet.Versioning.dll",
+        "tools/net6.0/System.Security.Cryptography.Pkcs.dll",
+        "tools/net6.0/System.Security.Cryptography.ProtectedData.dll",
+        "tools/net6.0/cs/Microsoft.DotNet.ApiCompat.Task.resources.dll",
+        "tools/net6.0/cs/Microsoft.DotNet.ApiCompatibility.resources.dll",
+        "tools/net6.0/cs/Microsoft.DotNet.PackageValidation.resources.dll",
+        "tools/net6.0/de/Microsoft.DotNet.ApiCompat.Task.resources.dll",
+        "tools/net6.0/de/Microsoft.DotNet.ApiCompatibility.resources.dll",
+        "tools/net6.0/de/Microsoft.DotNet.PackageValidation.resources.dll",
+        "tools/net6.0/es/Microsoft.DotNet.ApiCompat.Task.resources.dll",
+        "tools/net6.0/es/Microsoft.DotNet.ApiCompatibility.resources.dll",
+        "tools/net6.0/es/Microsoft.DotNet.PackageValidation.resources.dll",
+        "tools/net6.0/fr/Microsoft.DotNet.ApiCompat.Task.resources.dll",
+        "tools/net6.0/fr/Microsoft.DotNet.ApiCompatibility.resources.dll",
+        "tools/net6.0/fr/Microsoft.DotNet.PackageValidation.resources.dll",
+        "tools/net6.0/it/Microsoft.DotNet.ApiCompat.Task.resources.dll",
+        "tools/net6.0/it/Microsoft.DotNet.ApiCompatibility.resources.dll",
+        "tools/net6.0/it/Microsoft.DotNet.PackageValidation.resources.dll",
+        "tools/net6.0/ja/Microsoft.DotNet.ApiCompat.Task.resources.dll",
+        "tools/net6.0/ja/Microsoft.DotNet.ApiCompatibility.resources.dll",
+        "tools/net6.0/ja/Microsoft.DotNet.PackageValidation.resources.dll",
+        "tools/net6.0/ko/Microsoft.DotNet.ApiCompat.Task.resources.dll",
+        "tools/net6.0/ko/Microsoft.DotNet.ApiCompatibility.resources.dll",
+        "tools/net6.0/ko/Microsoft.DotNet.PackageValidation.resources.dll",
+        "tools/net6.0/pl/Microsoft.DotNet.ApiCompat.Task.resources.dll",
+        "tools/net6.0/pl/Microsoft.DotNet.ApiCompatibility.resources.dll",
+        "tools/net6.0/pl/Microsoft.DotNet.PackageValidation.resources.dll",
+        "tools/net6.0/pt-BR/Microsoft.DotNet.ApiCompat.Task.resources.dll",
+        "tools/net6.0/pt-BR/Microsoft.DotNet.ApiCompatibility.resources.dll",
+        "tools/net6.0/pt-BR/Microsoft.DotNet.PackageValidation.resources.dll",
+        "tools/net6.0/ru/Microsoft.DotNet.ApiCompat.Task.resources.dll",
+        "tools/net6.0/ru/Microsoft.DotNet.ApiCompatibility.resources.dll",
+        "tools/net6.0/ru/Microsoft.DotNet.PackageValidation.resources.dll",
+        "tools/net6.0/runtimes/win/lib/net6.0/System.Security.Cryptography.Pkcs.dll",
+        "tools/net6.0/runtimes/win/lib/net6.0/System.Security.Cryptography.ProtectedData.dll",
+        "tools/net6.0/tr/Microsoft.DotNet.ApiCompat.Task.resources.dll",
+        "tools/net6.0/tr/Microsoft.DotNet.ApiCompatibility.resources.dll",
+        "tools/net6.0/tr/Microsoft.DotNet.PackageValidation.resources.dll",
+        "tools/net6.0/zh-Hans/Microsoft.DotNet.ApiCompat.Task.resources.dll",
+        "tools/net6.0/zh-Hans/Microsoft.DotNet.ApiCompatibility.resources.dll",
+        "tools/net6.0/zh-Hans/Microsoft.DotNet.PackageValidation.resources.dll",
+        "tools/net6.0/zh-Hant/Microsoft.DotNet.ApiCompat.Task.resources.dll",
+        "tools/net6.0/zh-Hant/Microsoft.DotNet.ApiCompatibility.resources.dll",
+        "tools/net6.0/zh-Hant/Microsoft.DotNet.PackageValidation.resources.dll"
       ]
     },
     "Microsoft.DotNet.PlatformAbstractions/3.1.6": {
@@ -1365,6 +1522,25 @@
         "microsoft.extensions.hosting.abstractions.7.0.0.nupkg.sha512",
         "microsoft.extensions.hosting.abstractions.nuspec",
         "useSharedDesignerContext.txt"
+      ]
+    },
+    "Microsoft.Extensions.Localization.Abstractions/7.0.3": {
+      "sha512": "2sEhpRPiWY3iJ+nxHnLUqM8qNoGqQQqduk0QXd3iEt0fc4fw8EwFElqtT4OJMV0qnGGAwYykdOtrzZ1BIqdvpQ==",
+      "type": "package",
+      "path": "microsoft.extensions.localization.abstractions/7.0.3",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/net462/Microsoft.Extensions.Localization.Abstractions.dll",
+        "lib/net462/Microsoft.Extensions.Localization.Abstractions.xml",
+        "lib/net7.0/Microsoft.Extensions.Localization.Abstractions.dll",
+        "lib/net7.0/Microsoft.Extensions.Localization.Abstractions.xml",
+        "lib/netstandard2.0/Microsoft.Extensions.Localization.Abstractions.dll",
+        "lib/netstandard2.0/Microsoft.Extensions.Localization.Abstractions.xml",
+        "microsoft.extensions.localization.abstractions.7.0.3.nupkg.sha512",
+        "microsoft.extensions.localization.abstractions.nuspec"
       ]
     },
     "Microsoft.Extensions.Logging/7.0.0": {
@@ -2047,7 +2223,7 @@
   },
   "projectFileDependencyGroups": {
     "net7.0": [
-      "CounterStrikeSharp.API >= 1.0.86"
+      "CounterStrikeSharp.API >= 1.0.147"
     ]
   },
   "packageFolders": {
@@ -2091,7 +2267,7 @@
         "dependencies": {
           "CounterStrikeSharp.API": {
             "target": "Package",
-            "version": "[1.0.86, )"
+            "version": "[1.0.147, )"
           }
         },
         "imports": [
