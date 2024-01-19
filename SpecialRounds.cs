@@ -3,25 +3,12 @@ using CounterStrikeSharp.API.Core;
 using CounterStrikeSharp.API.Core.Attributes.Registration;
 using CounterStrikeSharp.API.Modules.Commands;
 using CounterStrikeSharp.API.Modules.Admin;
-using CounterStrikeSharp.API.Modules.Utils;
-using CounterStrikeSharp.API.Modules.Menu;
 using CounterStrikeSharp.API.Core.Attributes;
 using CounterStrikeSharp.API.Modules.Timers;
-using System.ComponentModel;
 
 namespace SpecialRounds;
 [MinimumApiVersion(120)]
 
-public static class GetUnixTime
-{
-    public static int GetUnixEpoch(this DateTime dateTime)
-    {
-        var unixTime = dateTime.ToUniversalTime() -
-                       new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-
-        return (int)unixTime.TotalSeconds;
-    }
-}
 public partial class SpecialRounds : BasePlugin, IPluginConfig<ConfigSpecials>
 {
     public override string ModuleName => "SpecialRounds";
@@ -36,7 +23,6 @@ public partial class SpecialRounds : BasePlugin, IPluginConfig<ConfigSpecials>
     public int Round;
     public int IsRoundNumber;
     public string NameOfRound = "";
-    public bool isset = false;
 
     public bool wasSpecialRound = false;
     public int currentTick = 0;
@@ -157,7 +143,6 @@ public partial class SpecialRounds : BasePlugin, IPluginConfig<ConfigSpecials>
             player_l.PlayerPawn.Value!.VelocityModifier = 0.0f;
         }
 
-        isset = false;
         IsRoundNumber = 0;
         NameOfRound = "Normal mode";
 
@@ -377,7 +362,6 @@ public partial class SpecialRounds : BasePlugin, IPluginConfig<ConfigSpecials>
             }
         }
 
-        isset = false;
         currentTick = 0;
 
         return HookResult.Continue;
